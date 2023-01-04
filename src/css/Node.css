@@ -1,0 +1,24 @@
+.node-container {
+  display: flex;
+  flex-direction: column;
+  padding: 0px 16px;
+}
+
+.node-name-wrapper {
+  display: flex;
+  align-items: center;
+  border: 1px solid red;
+}
+
+.expand-children {
+  transition: transform 0.3s;
+  will-change: transform;
+  padding: 2px;
+}
+
+.children {
+  transition: max-height;
+  will-change: max-height;
+  border: 1px solid blue;
+  overflow: hidden;
+}

@@ -1,0 +1,9 @@
+{
+  "editor.tabSize": 2,
+  "prettier.semi": false,
+  "javascript.format.semicolons": "remove",
+  "typescript.format.insertSpaceAfterSemicolonInForStatements": false,
+  "javascript.format.insertSpaceAfterSemicolonInForStatements": false,
+  "typescript.format.semicolons": "remove",
+  "css.completion.completePropertyWithSemicolon": true
+}
