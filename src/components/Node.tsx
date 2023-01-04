@@ -22,8 +22,8 @@ export const Node: FC<NodeProps> = ({ id, name, children }) => {
   return (
     <div id={id} className="node-container">
       <div className="node-name-wrapper" style={{ height: NODE_HEIGHT }}>
+        <div className="node-indicator"></div>
         <div className="node-name">{name}</div>
-        <div className="add-children">+</div>
         {children && (
           <div
             className="expand-children"
@@ -37,13 +37,22 @@ export const Node: FC<NodeProps> = ({ id, name, children }) => {
             &gt;
           </div>
         )}
+        <div className="add-children" title="Add">
+          <div className="add">+</div>
+        </div>
+        <div className="delete-children" title="Delete">
+          <div className="delete">x</div>
+        </div>
+        <div className="edit-children" title="Edit">
+          ~
+        </div>
       </div>
       {children && (
         <div
           className="children"
           style={{
             maxHeight: isChildrenExpanded ? childrenHeight * NODE_HEIGHT : 0,
-            transitionDuration: `${childrenHeight * 0.1}s`,
+            transitionDuration: `${0.2 + childrenHeight * 0.01}s`,
           }}
         >
           {children.map?.((nodeChild) => (

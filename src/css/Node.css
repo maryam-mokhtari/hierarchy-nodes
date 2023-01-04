@@ -7,18 +7,60 @@
 .node-name-wrapper {
   display: flex;
   align-items: center;
-  border: 1px solid red;
+}
+
+.node-indicator {
+  width: 10px;
+  height: 10px;
+  background-color: #ffeedd;
+  border: 1px solid #777;
+  transform: rotate(45deg);
+}
+
+.node-name {
+  padding: 0 8px;
 }
 
 .expand-children {
   transition: transform 0.3s;
   will-change: transform;
-  padding: 2px;
+  padding: 0 4px;
+  color: gray;
+  cursor: pointer;
+}
+
+.add-children,
+.delete-children,
+.edit-children {
+  margin: 0 3px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border: 1px solid #dedede;
+  border-radius: 50%;
+}
+
+.add {
+  color: green;
+  transform: scale(1.2);
+}
+
+.delete {
+  color: red;
+  transform: scale(1.1, 0.9);
+  padding-bottom: 2px;
+}
+
+.edit {
+  color: navy;
 }
 
 .children {
   transition: max-height;
   will-change: max-height;
-  border: 1px solid blue;
+  border-left: 1px solid #eee;
   overflow: hidden;
 }
