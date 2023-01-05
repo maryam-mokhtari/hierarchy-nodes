@@ -19,7 +19,6 @@ export const Node: FC<NodeProps> = ({ id, name, children }) => {
   const [isNewChildInputShown, setIsNewChildInputShown] = useState(false)
   const [newChildValue, setNewChildValue] = useState("")
   const [newChildren, setNewChildren] = useState(children)
-  const [newName, setNewName] = useState(name)
   const [isNameEditing, setIsNameEditing] = useState(false)
   const [isNodeDeleted, setIsNodeDeleted] = useState(false)
 
@@ -35,9 +34,8 @@ export const Node: FC<NodeProps> = ({ id, name, children }) => {
     }
   }
 
-  const onNodeUpdate = () => {
-    if (isNameEditing) {
-      setNewName(newName)
+  const onNodeUpdate = (e: ChangeEvent<HTMLInputElement>) => {
+    if (isNameEditing && e?.target?.value) {
       setIsNameEditing(false)
     }
   }
@@ -56,14 +54,16 @@ export const Node: FC<NodeProps> = ({ id, name, children }) => {
   }
 
   const onAddNode = () => {
-    const newAddedChildren = [
-      ...(newChildren || []),
-      { id: id + "-" + newChildId++, name: newChildValue },
-    ]
-    setNewChildren(newAddedChildren)
-    setIsNewChildInputShown(false)
-    setIsChildrenExpanded(true)
-    setNewChildValue("")
+    if (newChildValue) {
+      const newAddedChildren = [
+        ...(newChildren || []),
+        { id: id + "-" + newChildId++, name: newChildValue },
+      ]
+      setNewChildren(newAddedChildren)
+      setIsNewChildInputShown(false)
+      setIsChildrenExpanded(true)
+      setNewChildValue("")
+    }
   }
 
   const onCancelAddNode = () => {
