@@ -23,7 +23,16 @@ export const Node: FC<NodeProps> = ({ id, name, children }) => {
 
   const onNodeDelete = () => {}
 
-  const onNodeEdit = () => {}
+  const onNodeEdit = () => {
+    setIsNameEditing(true)
+  }
+
+  const onNodeUpdate = () => {
+    if (isNameEditing) {
+      setNewName(newName)
+      setIsNameEditing(false)
+    }
+  }
 
   const onToggle = () => {
     setIsChildrenExpanded((isExpanded) => !isExpanded)
@@ -74,7 +83,9 @@ export const Node: FC<NodeProps> = ({ id, name, children }) => {
               "node-name",
               isNameEditing && "node-name-editing"
             )}
-            value={newName}
+            defaultValue={newName}
+            onClick={onNodeEdit}
+            onBlur={onNodeUpdate}
             readOnly={!isNameEditing}
           />
         </div>
@@ -86,9 +97,6 @@ export const Node: FC<NodeProps> = ({ id, name, children }) => {
             <div className="delete" onClick={onNodeDelete}>
               -
             </div>
-          </div>
-          <div className="edit-child" title="Edit" onClick={onNodeEdit}>
-            ~
           </div>
         </div>
       </div>

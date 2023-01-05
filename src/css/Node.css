@@ -28,7 +28,7 @@
   background-color: #ffeedd;
   border: 1px solid #777;
   transform: rotate(45deg);
-  margin-left: 6px;
+  margin: 0 6px;
 }
 
 .node-name {
@@ -38,12 +38,14 @@
   outline: none;
   width: fit-content;
   background-color: transparent;
+  padding: 4px;
 }
 
 .node-name-editing,
 .node-name-editing:focus {
   border: 1px solid #ccbbaa;
   border-radius: 6px;
+  background-color: #fff;
 }
 
 .expand-children,
@@ -64,8 +66,7 @@
 .add-child,
 .submit-add-child,
 .cancel-add-child,
-.delete-child,
-.edit-child {
+.delete-child {
   margin: 0 4px;
   width: 18px;
   height: 18px;
@@ -103,10 +104,6 @@
   color: red;
   transform: scaleX(1.5);
   padding-bottom: 2px;
-}
-
-.edit {
-  color: navy;
 }
 
 .children {
