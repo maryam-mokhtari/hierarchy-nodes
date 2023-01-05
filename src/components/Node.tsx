@@ -23,12 +23,16 @@ export const Node: FC<NodeProps> = ({ id, name, children }) => {
   const [isNameEditing, setIsNameEditing] = useState(false)
   const [isNodeDeleted, setIsNodeDeleted] = useState(false)
 
+  const isRootNode = name === ROOT_NODE_NAME
+
   const onNodeDelete = () => {
     setIsNodeDeleted(true)
   }
 
   const onNodeEdit = () => {
-    setIsNameEditing(true)
+    if (!isRootNode) {
+      setIsNameEditing(true)
+    }
   }
 
   const onNodeUpdate = () => {
@@ -99,7 +103,7 @@ export const Node: FC<NodeProps> = ({ id, name, children }) => {
           <div className="add-child" title="Add" onClick={onShowNewChild}>
             <div className="add">+</div>
           </div>
-          {name !== ROOT_NODE_NAME && (
+          {!isRootNode && (
             <div className="delete-child" title="Delete">
               <div className="delete" onClick={onNodeDelete}>
                 -
