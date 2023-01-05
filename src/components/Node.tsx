@@ -18,6 +18,8 @@ export const Node: FC<NodeProps> = ({ id, name, children }) => {
   const [isNewChildInputShown, setIsNewChildInputShown] = useState(false)
   const [newChildValue, setNewChildValue] = useState("")
   const [newChildren, setNewChildren] = useState(children)
+  const [newName, setNewName] = useState(name)
+  const [isNameEditing, setIsNameEditing] = useState(false)
 
   const onNodeDelete = () => {}
 
@@ -55,31 +57,39 @@ export const Node: FC<NodeProps> = ({ id, name, children }) => {
   return (
     <div id={id} className="node-container">
       <div className="node-name-wrapper">
-        <div className="node-indicator"></div>
-        <div className="node-name">{name}</div>
-        {newChildren && (
-          <div
-            className="expand-children"
-            onClick={onToggle}
-            style={{
-              transform: isChildrenExpanded
-                ? "scale(1.5, 0.75) rotate(90deg)"
-                : "scale(0.75, 1.5) rotate(0deg)",
-            }}
-          >
-            &gt;
-          </div>
-        )}
-        <div className="add-child" title="Add" onClick={onShowNewChild}>
-          <div className="add">+</div>
+        <div className="left">
+          {newChildren && (
+            <div
+              className={
+                isChildrenExpanded ? "collapse-children" : "expand-children"
+              }
+              onClick={onToggle}
+            >
+              &gt;
+            </div>
+          )}
+          <div className="node-indicator"></div>
+          <input
+            className={joinCssClasses(
+              "node-name",
+              isNameEditing && "node-name-editing"
+            )}
+            value={newName}
+            readOnly={!isNameEditing}
+          />
         </div>
-        <div className="delete-child" title="Delete">
-          <div className="delete" onClick={onNodeDelete}>
-            -
+        <div className="right">
+          <div className="add-child" title="Add" onClick={onShowNewChild}>
+            <div className="add">+</div>
           </div>
-        </div>
-        <div className="edit-child" title="Edit" onClick={onNodeEdit}>
-          ~
+          <div className="delete-child" title="Delete">
+            <div className="delete" onClick={onNodeDelete}>
+              -
+            </div>
+          </div>
+          <div className="edit-child" title="Edit" onClick={onNodeEdit}>
+            ~
+          </div>
         </div>
       </div>
       <div

@@ -1,7 +1,7 @@
 .node-container {
   display: flex;
   flex-direction: column;
-  padding: 0px 16px;
+  padding-left: 16px;
 }
 
 .node-name-wrapper {
@@ -9,25 +9,56 @@
   align-items: center;
   height: 28px;
 }
+.left,
+.right {
+  display: flex;
+  align-items: center;
+}
+.left {
+  flex-grow: 1;
+}
+
+.node-name-wrapper:hover {
+  background-color: #f7f3f0;
+}
 
 .node-indicator {
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
   background-color: #ffeedd;
   border: 1px solid #777;
   transform: rotate(45deg);
+  margin-left: 6px;
 }
 
 .node-name {
   padding: 0 8px;
+  border: none;
+  appearance: none;
+  outline: none;
+  width: fit-content;
+  background-color: transparent;
 }
 
-.expand-children {
+.node-name-editing,
+.node-name-editing:focus {
+  border: 1px solid #ccbbaa;
+  border-radius: 6px;
+}
+
+.expand-children,
+.collapse-children {
   transition: transform 0.3s;
   will-change: transform;
   padding: 0 4px;
   color: gray;
   cursor: pointer;
+}
+.expand-children {
+  transform: scaleY(2) rotate(0deg);
+}
+.collapse-children {
+  transform: scaleX(2) rotate(90deg);
 }
 
 .add-child,
@@ -36,8 +67,8 @@
 .delete-child,
 .edit-child {
   margin: 0 4px;
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -55,8 +86,6 @@
   color: #fff;
   border: none;
   margin: 0 2px;
-  width: 18px;
-  height: 18px;
 }
 .submit-add-child {
   background-color: rgb(29, 90, 29);
@@ -66,13 +95,13 @@
   background-color: rgb(117, 23, 23);
 }
 .cancel {
-  transform: scale(1, 0.7);
+  transform: scaleY(0.7);
   padding-bottom: 2px;
 }
 
 .delete {
   color: red;
-  transform: scale(1.5, 1);
+  transform: scaleX(1.5);
   padding-bottom: 2px;
 }
 
