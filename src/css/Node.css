@@ -7,6 +7,7 @@
 .node-name-wrapper {
   display: flex;
   align-items: center;
+  height: 28px;
 }
 
 .node-indicator {
@@ -29,28 +30,49 @@
   cursor: pointer;
 }
 
-.add-children,
-.delete-children,
-.edit-children {
-  margin: 0 3px;
+.add-child,
+.submit-add-child,
+.cancel-add-child,
+.delete-child,
+.edit-child {
+  margin: 0 4px;
   width: 20px;
   height: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  border: 1px solid #dedede;
+  border: 1px solid #c6baba;
   border-radius: 50%;
 }
-
 .add {
   color: green;
   transform: scale(1.2);
 }
 
+.submit-add-child,
+.cancel-add-child {
+  color: #fff;
+  border: none;
+  margin: 0 2px;
+  width: 18px;
+  height: 18px;
+}
+.submit-add-child {
+  background-color: rgb(29, 90, 29);
+}
+
+.cancel-add-child {
+  background-color: rgb(117, 23, 23);
+}
+.cancel {
+  transform: scale(1, 0.7);
+  padding-bottom: 2px;
+}
+
 .delete {
   color: red;
-  transform: scale(1.1, 0.9);
+  transform: scale(1.5, 1);
   padding-bottom: 2px;
 }
 
@@ -59,8 +81,34 @@
 }
 
 .children {
-  transition: max-height;
+  transition: max-height 0.7s;
   will-change: max-height;
   border-left: 1px solid #eee;
   overflow: hidden;
+  max-height: 0;
+}
+.children-shown {
+  max-height: 2000px;
+}
+
+.new-child-wrapper {
+  display: flex;
+  align-items: center;
+  height: 0;
+  transition: height 0.3s;
+  will-change: height;
+  overflow: hidden;
+}
+.new-child-wrapper-shown {
+  height: 30px;
+}
+
+.new-child-input,
+.new-child-input:focus {
+  border: 1px solid #ccbbaa;
+  border-radius: 6px;
+  margin: 0 4px;
+  appearance: none;
+  padding: 4px;
+  outline: none;
 }

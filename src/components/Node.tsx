@@ -1,5 +1,6 @@
-import { FC, useState } from "react"
+import { ChangeEvent, FC, useRef, useState } from "react"
 import "../css/Node.css"
+import { joinCssClasses } from "../utils/csss"
 import { getChildrenHeight } from "../utils/height"
 
 export type NodeProps = {
@@ -8,23 +9,55 @@ export type NodeProps = {
   children?: NodeProps[]
 }
 
-const NODE_HEIGHT = 30
-
 export const Node: FC<NodeProps> = ({ id, name, children }) => {
+  let newChildId = 1
+
+  const newChildInputRef = useRef<HTMLInputElement>(null)
+
   const [isChildrenExpanded, setIsChildrenExpanded] = useState(false)
+  const [isNewChildInputShown, setIsNewChildInputShown] = useState(false)
+  const [newChildValue, setNewChildValue] = useState("")
+  const [newChildren, setNewChildren] = useState(children)
+
+  const onNodeDelete = () => {}
+
+  const onNodeEdit = () => {}
 
   const onToggle = () => {
     setIsChildrenExpanded((isExpanded) => !isExpanded)
   }
 
-  const childrenHeight = getChildrenHeight({ id, name, children })
+  const onNewChildInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setNewChildValue(e.target.value)
+  }
+
+  const onShowNewChild = () => {
+    setIsNewChildInputShown(true)
+    newChildInputRef?.current?.focus()
+  }
+
+  const onAddNode = () => {
+    const newAddedChildren = [
+      ...(newChildren || []),
+      { id: id + "-" + newChildId++, name: newChildValue },
+    ]
+    setNewChildren(newAddedChildren)
+    setIsNewChildInputShown(false)
+    setIsChildrenExpanded(true)
+    setNewChildValue("")
+  }
+
+  const onCancelAddNode = () => {
+    setIsNewChildInputShown(false)
+    setNewChildValue("")
+  }
 
   return (
     <div id={id} className="node-container">
-      <div className="node-name-wrapper" style={{ height: NODE_HEIGHT }}>
+      <div className="node-name-wrapper">
         <div className="node-indicator"></div>
         <div className="node-name">{name}</div>
-        {children && (
+        {newChildren && (
           <div
             className="expand-children"
             onClick={onToggle}
@@ -37,25 +70,48 @@ export const Node: FC<NodeProps> = ({ id, name, children }) => {
             &gt;
           </div>
         )}
-        <div className="add-children" title="Add">
+        <div className="add-child" title="Add" onClick={onShowNewChild}>
           <div className="add">+</div>
         </div>
-        <div className="delete-children" title="Delete">
-          <div className="delete">x</div>
+        <div className="delete-child" title="Delete">
+          <div className="delete" onClick={onNodeDelete}>
+            -
+          </div>
         </div>
-        <div className="edit-children" title="Edit">
+        <div className="edit-child" title="Edit" onClick={onNodeEdit}>
           ~
         </div>
       </div>
-      {children && (
+      <div
+        className={joinCssClasses(
+          "new-child-wrapper",
+          isNewChildInputShown && "new-child-wrapper-shown"
+        )}
+      >
+        <input
+          ref={newChildInputRef}
+          className="new-child-input"
+          onChange={onNewChildInputChange}
+          value={newChildValue}
+        />
+        <div className="submit-add-child" title="Add" onClick={onAddNode}>
+          <div className="submit-add">+</div>
+        </div>
+
+        <div className="cancel-add-child" title="Cancel">
+          <div className="cancel" onClick={onCancelAddNode}>
+            x
+          </div>
+        </div>
+      </div>
+      {newChildren && (
         <div
-          className="children"
-          style={{
-            maxHeight: isChildrenExpanded ? childrenHeight * NODE_HEIGHT : 0,
-            transitionDuration: `${0.2 + childrenHeight * 0.01}s`,
-          }}
+          className={joinCssClasses(
+            "children",
+            isChildrenExpanded && "children-shown"
+          )}
         >
-          {children.map?.((nodeChild) => (
+          {newChildren.map?.((nodeChild) => (
             <Node {...nodeChild} />
           ))}
         </div>
