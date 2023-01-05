@@ -1,13 +1,14 @@
 import { ChangeEvent, FC, useRef, useState } from "react"
 import "../css/Node.css"
-import { joinCssClasses } from "../utils/csss"
-import { getChildrenHeight } from "../utils/height"
+import { joinCssClasses } from "../utils/css"
 
 export type NodeProps = {
   id: string
   name: string
   children?: NodeProps[]
 }
+
+const ROOT_NODE_NAME = "root"
 
 export const Node: FC<NodeProps> = ({ id, name, children }) => {
   let newChildId = 1
@@ -20,8 +21,11 @@ export const Node: FC<NodeProps> = ({ id, name, children }) => {
   const [newChildren, setNewChildren] = useState(children)
   const [newName, setNewName] = useState(name)
   const [isNameEditing, setIsNameEditing] = useState(false)
+  const [isNodeDeleted, setIsNodeDeleted] = useState(false)
 
-  const onNodeDelete = () => {}
+  const onNodeDelete = () => {
+    setIsNodeDeleted(true)
+  }
 
   const onNodeEdit = () => {
     setIsNameEditing(true)
@@ -63,7 +67,9 @@ export const Node: FC<NodeProps> = ({ id, name, children }) => {
     setNewChildValue("")
   }
 
-  return (
+  return isNodeDeleted ? (
+    <></>
+  ) : (
     <div id={id} className="node-container">
       <div className="node-name-wrapper">
         <div className="left">
@@ -93,11 +99,13 @@ export const Node: FC<NodeProps> = ({ id, name, children }) => {
           <div className="add-child" title="Add" onClick={onShowNewChild}>
             <div className="add">+</div>
           </div>
-          <div className="delete-child" title="Delete">
-            <div className="delete" onClick={onNodeDelete}>
-              -
+          {name !== ROOT_NODE_NAME && (
+            <div className="delete-child" title="Delete">
+              <div className="delete" onClick={onNodeDelete}>
+                -
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
       <div
@@ -130,7 +138,7 @@ export const Node: FC<NodeProps> = ({ id, name, children }) => {
           )}
         >
           {newChildren.map?.((nodeChild) => (
-            <Node {...nodeChild} />
+            <Node key={id} {...nodeChild} />
           ))}
         </div>
       )}
