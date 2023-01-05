@@ -74,7 +74,7 @@ export const Node: FC<NodeProps> = ({ id, name, children }) => {
   return isNodeDeleted ? (
     <></>
   ) : (
-    <div id={id} className="node-container">
+    <div id={id} data-testId={id} className="node-container">
       <div className="node-name-wrapper">
         <div className="left">
           {newChildren && (
@@ -89,25 +89,35 @@ export const Node: FC<NodeProps> = ({ id, name, children }) => {
           )}
           <div className="node-indicator"></div>
           <input
+            aria-label="input-node"
+            data-testId={`node-${id}`}
             className={joinCssClasses(
               "node-name",
               isNameEditing && "node-name-editing"
             )}
-            defaultValue={newName}
+            defaultValue={name}
             onClick={onNodeEdit}
             onBlur={onNodeUpdate}
             readOnly={!isNameEditing}
           />
         </div>
         <div className="right">
-          <div className="add-child" title="Add" onClick={onShowNewChild}>
+          <div
+            className="add-child"
+            title="Add"
+            data-testId={`add-to-${id}`}
+            onClick={onShowNewChild}
+          >
             <div className="add">+</div>
           </div>
           {!isRootNode && (
-            <div className="delete-child" title="Delete">
-              <div className="delete" onClick={onNodeDelete}>
-                -
-              </div>
+            <div
+              className="delete-child"
+              title="Delete"
+              data-testId={`delete-${id}`}
+              onClick={onNodeDelete}
+            >
+              <div className="delete">-</div>
             </div>
           )}
         </div>
@@ -119,19 +129,28 @@ export const Node: FC<NodeProps> = ({ id, name, children }) => {
         )}
       >
         <input
+          data-testId={`child-of-${id}`}
           ref={newChildInputRef}
           className="new-child-input"
           onChange={onNewChildInputChange}
           value={newChildValue}
         />
-        <div className="submit-add-child" title="Add" onClick={onAddNode}>
+        <div
+          className="submit-add-child"
+          title="Add"
+          data-testId={`submit-add-to-${id}`}
+          onClick={onAddNode}
+        >
           <div className="submit-add">+</div>
         </div>
 
-        <div className="cancel-add-child" title="Cancel">
-          <div className="cancel" onClick={onCancelAddNode}>
-            x
-          </div>
+        <div
+          className="cancel-add-child"
+          data-testId={`cancel-add-to-${id}`}
+          onClick={onCancelAddNode}
+          title="Cancel"
+        >
+          <div className="cancel">x</div>
         </div>
       </div>
       {newChildren && (
